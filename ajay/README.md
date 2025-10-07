@@ -1,5 +1,5 @@
 # Ex.05 Design a Website for Server Side Processing
-## Date:08/10/2025
+## Date:07/10/2025
 
 ## AIM:
  To design a website to calculate the power of a lamp filament in an incandescent bulb in the server side. 
@@ -34,6 +34,7 @@ Publish the website in the given URL.
 ## PROGRAM :
 ```
 math.html
+
 <html>
 <head>
     <title>Power Calculator</title>
@@ -103,14 +104,78 @@ math.html
 </body>
 </html>
 
+views.py
 
+from django.shortcuts import render 
+def powercalc(request): 
+    context={} 
+    context['power'] = "0" 
+    context['I'] = "0" 
+    context['R'] = "0" 
+    if request.method == 'POST': 
+        print("POST method is used")
+        I = request.POST.get('intensity','0')
+        R = request.POST.get('resistance','0')
+        print('request=',request) 
+        print('intensity=',I) 
+        print('resistance=',R) 
+        power = (int(I) * int(I) ) * int(R) 
+        context['power'] = power
+        context['intensity'] = I
+        context['resistance'] = R 
+        print('power=',power) 
+    return render(request,'mathapp/math.html',context)
+
+    urls.py
+    from django.contrib import admin 
+from django.urls import path 
+from mathapp import views 
+urlpatterns = [ 
+    path('admin/', admin.site.urls), 
+    path('powercalculator/',views.powercalc,name="powercalculator"),
+    path('',views.powercalc,name="powercalculatorroot")
+]
+
+views.py
+
+from django.shortcuts import render 
+def powercalc(request): 
+    context={} 
+    context['power'] = "0" 
+    context['I'] = "0" 
+    context['R'] = "0" 
+    if request.method == 'POST': 
+        print("POST method is used")
+        I = request.POST.get('intensity','0')
+        R = request.POST.get('resistance','0')
+        print('request=',request) 
+        print('intensity=',I) 
+        print('resistance=',R) 
+        power = (int(I) * int(I) ) * int(R) 
+        context['power'] = power
+        context['intensity'] = I
+        context['resistance'] = R 
+        print('power=',power) 
+    return render(request,'mathapp/math.html',context)
+
+ urls.py
+
+from django.contrib import admin 
+from django.urls import path 
+from mathapp import views 
+urlpatterns = [ 
+    path('admin/', admin.site.urls), 
+    path('powercalculator/',views.powercalc,name="powercalculator"),
+    path('',views.powercalc,name="powercalculatorroot")
+]
+   
 ```
 
 ## SERVER SIDE PROCESSING:
-
+![alt text](<Screenshot 2025-10-07 232822.png>)
 
 ## HOMEPAGE:
-
+![alt text](<Screenshot 2025-10-07 232711.png>)
 
 ## RESULT:
 The program for performing server side processing is completed successfully.
